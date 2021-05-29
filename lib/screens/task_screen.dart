@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:todoey/components/add_task.dart';
 import 'package:todoey/components/task_list.dart';
+import 'package:todoey/models/task.dart';
 
 import '../constants.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
+  @override
+  _TasksScreenState createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasks = [
+    Task(name: 'Buy milk'),
+    Task(name: 'Buy eggs'),
+    Task(name: 'Buy bread')
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,10 +27,19 @@ class TasksScreen extends StatelessWidget {
             context: context,
             isScrollControlled: true,
             builder: (context) => SingleChildScrollView(
-                child: Container(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: AddTask())),
+              child: Container(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: AddTask(
+                  onPressed: (newTaskTitle) {
+                    setState(() {
+                      tasks.add(Task(name: newTaskTitle));
+                      Navigator.pop(context);
+                    });
+                  },
+                ),
+              ),
+            ),
           );
         },
         backgroundColor: Colors.lightBlueAccent,
@@ -53,7 +74,7 @@ class TasksScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10.0),
                 Text(
-                  '12 tasks',
+                  '${tasks.length.toString()} Tasks',
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w300,
@@ -66,7 +87,7 @@ class TasksScreen extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: kCurvedDecoration,
-              child: TasksList(),
+              child: TasksList(tasks: tasks),
             ),
           ),
         ],

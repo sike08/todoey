@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-
 import '../constants.dart';
 
 class AddTask extends StatelessWidget {
+  String taskTitle;
+  final Function onPressed;
+
+  AddTask({this.onPressed});
+
   @override
   Widget build(BuildContext buildContext) {
     return Container(
@@ -25,11 +29,14 @@ class AddTask extends StatelessWidget {
               autofocus: true,
               textAlign: TextAlign.center,
               decoration: InputDecoration(),
+              onChanged: (value) {
+                taskTitle = value;
+              },
             ),
             FlatButton(
               color: Colors.lightBlueAccent,
               onPressed: () {
-                print('print button');
+                onPressed(taskTitle);
               },
               child: Text(
                 'Add',
