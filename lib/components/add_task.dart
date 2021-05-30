@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/task_data.dart';
+
 import '../constants.dart';
 
 class AddTask extends StatelessWidget {
   String taskTitle;
-  final Function onPressed;
-
-  AddTask({this.onPressed});
 
   @override
-  Widget build(BuildContext buildContext) {
+  Widget build(BuildContext context) {
     return Container(
       color: Color(0xff757575),
       child: Container(
@@ -36,7 +36,10 @@ class AddTask extends StatelessWidget {
             FlatButton(
               color: Colors.lightBlueAccent,
               onPressed: () {
-                onPressed(taskTitle);
+                Provider.of<TaskData>(context, listen: false)
+                    .addTask(taskTitle);
+
+                Navigator.pop(context);
               },
               child: Text(
                 'Add',

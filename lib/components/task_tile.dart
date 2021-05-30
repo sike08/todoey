@@ -4,8 +4,9 @@ class TaskTile extends StatelessWidget {
   final bool isChecked;
   final String name;
   final Function callback;
+  final Function onLongPress;
 
-  TaskTile({this.name, this.isChecked, this.callback});
+  TaskTile({this.name, this.isChecked, this.callback, this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class TaskTile extends StatelessWidget {
           decoration: isChecked ? TextDecoration.lineThrough : null,
         ),
       ),
+      onLongPress: onLongPress,
     );
   }
 }
